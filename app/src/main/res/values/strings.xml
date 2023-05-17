@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SnapMap</string>
+    <string name="lokacija1Desc">Lokacija 1</string>
+    <string name="lokacija_1">Lokacija 1</string>
+    <string name="lokacija_2">Lokacija 2</string>
+    <string name="ime1">Janez Novak</string>
+    <string name="ikona_profila">Ikona profila</string>
+    <string name="ime01_tekst">Nik Napeti</string>
+    <string name="ikona_ugibanja">Ikona ugibanja lokacije</string>
+    <string name="ime02_tekst">Nika Da</string>
 </resources>
