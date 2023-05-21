@@ -8,4 +8,6 @@
     <string name="ime01_tekst">Nik Napeti</string>
     <string name="ikona_ugibanja">Ikona ugibanja lokacije</string>
     <string name="ime02_tekst">Nika Da</string>
+    <string name="gumbZaSlikat">gumb za slikat</string>
+    <string name="potrdi">Potrdi</string>
 </resources>
