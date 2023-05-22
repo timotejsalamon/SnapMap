@@ -6,95 +6,93 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ime1"
+        android:id="@+id/lokacijaStran"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgMain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:context=".MainActivity">
 
-        <ScrollView
-            android:id="@+id/Scroll"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lokacija1"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/lokacija1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="276dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/rounded">
-
-                    <ImageView
-                        android:id="@+id/lokacija1Slika"
-                        android:layout_width="395dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="-15dp"
-                        android:layout_marginBottom="32dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/lokacija_1"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="25dp"
-                        android:scaleType="centerCrop"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0"
-                        app:srcCompat="@drawable/fe" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/lokacija2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="300dp"
-                    android:background="@drawable/rounded">
-
-                    <ImageView
-                        android:id="@+id/lokacija2Slika"
-                        android:layout_width="395dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="-15dp"
-                        android:layout_marginBottom="32dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/lokacija_1"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="25dp"
-                        android:scaleType="centerCrop"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.34"
-                        app:srcCompat="@drawable/mapa" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/lokacija1Slika"
+                    android:layout_width="395dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/lokacija_1"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:srcCompat="@drawable/fe" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lokacija2"
+                android:layout_width="370dp"
+                android:layout_height="300dp"
+                android:background="@drawable/rounded">
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapa"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
                     android:layout_marginBottom="15dp"
-                    android:text="@string/potrdi" />
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/mapa"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
 
-            </LinearLayout>
 
-        </ScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/potrdi_lokacijo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-15dp"
+            android:text="@string/potrdi"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

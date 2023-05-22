@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
-    ImageView ugibaj;
+    private ImageView ugibaj;
+    private ImageView slikaj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,16 +18,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         ugibaj = findViewById(R.id.lokacija_gumb);
-        ugibaj.setOnClickListener(this);
+        slikaj = findViewById(R.id.kamera);
 
-        //ImageView slikaj = findViewById(R.id.lokacija_gumb2);
-        //slikaj.setOnClickListener(this);
+        ugibaj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Lokacija.class);
+                startActivity(intent);
+            }
+        });
 
-    }
+        slikaj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Slikaj.class);
+                startActivity(intent);
+            }
+        });
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(this, Slikaj.class);
-        startActivity(intent);
     }
 }
