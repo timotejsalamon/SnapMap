@@ -36,33 +36,20 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/rounded">
 
-                    <ImageView
-                        android:id="@+id/lokacija1Slika"
-                        android:layout_width="395dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="-15dp"
-                        android:layout_marginBottom="32dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/lokacija_1"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="25dp"
-                        android:scaleType="centerCrop"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0"
-                        app:srcCompat="@drawable/fe" />
+                    <SurfaceView
+                        android:id="@+id/cameraPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/btnCapture"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/gumbZaSlikat"
-                    app:srcCompat="@drawable/camera" />
+                    android:text="Capture"
+                    android:onClick="capturePicture" />
 
             </LinearLayout>
 
