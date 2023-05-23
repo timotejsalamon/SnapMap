@@ -33,9 +33,9 @@
                 android:background="@drawable/rounded">
 
                 <ImageView
-                    android:id="@+id/lokacija1Slika"
+                    android:id="@+id/imageView"
                     android:layout_width="395dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="220dp"
                     android:layout_marginTop="-15dp"
                     android:layout_marginBottom="32dp"
                     android:adjustViewBounds="true"
@@ -102,7 +102,7 @@
                 <ImageView
                     android:id="@+id/lokacija2Slika"
                     android:layout_width="395dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:layout_marginTop="-15dp"
                     android:layout_marginBottom="32dp"
                     android:adjustViewBounds="true"
