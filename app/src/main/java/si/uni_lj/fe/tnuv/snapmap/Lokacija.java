@@ -60,7 +60,6 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
                     Location location = locationResult.getLastLocation();
                     if (location != null) {
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        googleMap.addMarker(new MarkerOptions().position(latLng));
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f));
                     }
                 }
@@ -76,7 +75,7 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
             intent.putExtra("lon", coords.longitude);
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Please select a location first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lokacija ni izbrana!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -108,7 +107,6 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
                 if (location != null) {
                     LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    googleMap.addMarker(new MarkerOptions().position(latLng).title("Current Location"));
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f));
                 }
             });
@@ -122,7 +120,7 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 enableMyLocation();
             } else {
-                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Brez dovoljenja za lokacaijo", Toast.LENGTH_SHORT).show();
             }
         }
     }

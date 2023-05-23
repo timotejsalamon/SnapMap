@@ -4,6 +4,7 @@ package si.uni_lj.fe.tnuv.snapmap;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,9 +49,11 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
         izbranoLat = getIntent().getDoubleExtra("lat", 0);
         izbranoLon = getIntent().getDoubleExtra("lon", 0);
 
-        String tocke = "Distance: " + distance(pravilnoLat, praviloLon, izbranoLat, izbranoLon) + "\nStevilo tock: " + tockeIzracun(distance(pravilnoLat, praviloLon, izbranoLat, izbranoLon));
+        double razdalja = distance(pravilnoLat, praviloLon, izbranoLat, izbranoLon);
+        int tocke = tockeIzracun(razdalja);
 
-        Toast.makeText(this, tocke, Toast.LENGTH_SHORT).show();
+        TextView besedilo = findViewById(R.id.score);
+        besedilo.setText("Razdalja: " + razdalja + "\nŠtevilo točk: " + tocke);
     }
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -75,7 +78,7 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
 
         if (distance > 80) {
             return 1;
-        } else if (distance < 0.1) {
+        } else if (distance < 0.2) {
             return maxTock;
         }
 
