@@ -2,23 +2,45 @@ package si.uni_lj.fe.tnuv.snapmap;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-public class Rezultat extends AppCompatActivity {
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
 
     private double pravilnoLat;
     private double praviloLon;
     private double izbranoLat;
     private double izbranoLon;
 
+    private MapView mapa;
+    private GoogleMap googleMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rezultat);
+
+        mapa = findViewById(R.id.mapaRez);
+        mapa.onCreate(savedInstanceState);
+        mapa.getMapAsync(this);
 
         pravilnoLat = 46.045152;
         praviloLon = 14.489788;
@@ -52,7 +74,7 @@ public class Rezultat extends AppCompatActivity {
         int maxTock = 5000;
 
         if (distance > 80) {
-            return 0;
+            return 1;
         } else if (distance < 0.1) {
             return maxTock;
         }
@@ -61,5 +83,62 @@ public class Rezultat extends AppCompatActivity {
         int tocke = (int) (slope * (distance - minRazdalja) + maxTock);
 
         return tocke;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+
+        LatLng pravilnoKoord = new LatLng(pravilnoLat, praviloLon);
+        LatLng izbranoKoord = new LatLng(izbranoLat, izbranoLon);
+
+        Marker pravilno = googleMap.addMarker(new MarkerOptions().position(pravilnoKoord));
+        Marker izbrano = googleMap.addMarker(new MarkerOptions().position(izbranoKoord));
+        pravilno.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
+        PolylineOptions polylineOptions = new PolylineOptions()
+                .add(pravilnoKoord, izbranoKoord)
+                .width(8)
+                .color(Color.BLACK);
+        Polyline crta = googleMap.addPolyline(polylineOptions);
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(pravilno.getPosition());
+        builder.include(izbrano.getPosition());
+        LatLngBounds meja = builder.build();
+        int padding = 300;
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(meja, padding);
+        googleMap.animateCamera(cameraUpdate);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapa.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapa.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapa.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapa.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapa.onLowMemory();
     }
 }

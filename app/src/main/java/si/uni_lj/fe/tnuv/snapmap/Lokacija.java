@@ -60,7 +60,7 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
                     Location location = locationResult.getLastLocation();
                     if (location != null) {
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        googleMap.addMarker(new MarkerOptions().position(latLng).title("Current Location"));
+                        googleMap.addMarker(new MarkerOptions().position(latLng));
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f));
                     }
                 }
