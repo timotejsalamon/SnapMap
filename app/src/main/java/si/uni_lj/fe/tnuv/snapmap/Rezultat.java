@@ -4,6 +4,9 @@ package si.uni_lj.fe.tnuv.snapmap;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,9 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         setContentView(R.layout.rezultat);
 
         mapa = findViewById(R.id.mapaRez);
@@ -53,7 +59,10 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
         int tocke = tockeIzracun(razdalja);
 
         TextView besedilo = findViewById(R.id.score);
-        besedilo.setText("Razdalja: " + razdalja + "\nŠtevilo točk: " + tocke);
+        besedilo.setText("Razdalja: " + Math.round(razdalja) + "km" + "\nŠtevilo točk: " + tocke);
+
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setProgress(tocke);
     }
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {

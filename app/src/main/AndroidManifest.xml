@@ -20,6 +20,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
         <activity
+            android:parentActivityName=".Slikaj"
+            android:name=".PotrdiSliko"
+            android:exported="false"/>
+        <activity
             android:parentActivityName=".MainActivity"
             android:name=".Lokacija"
             android:exported="false"/>
