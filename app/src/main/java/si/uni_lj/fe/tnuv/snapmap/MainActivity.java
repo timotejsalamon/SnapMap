@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         // Display the first image in an ImageView (you can customize this as needed)
         if (!imageFiles.isEmpty()) {
             File firstImageFile = imageFiles.get(0);
-            ImageView imageView = findViewById(R.id.imageView);
+            ImageView imageView = findViewById(R.id.lokacija1Slika);
             File secondImageFile = imageFiles.get(1);
             if(secondImageFile != null){
                 ImageView imageView2 = findViewById(R.id.lokacija2Slika);

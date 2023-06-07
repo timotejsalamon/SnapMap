@@ -8,16 +8,30 @@
     android:background="@color/bgMain"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/snapmaplogo"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="-10dp"/>
+
     <ScrollView
         android:id="@+id/Scroll"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="620dp"
+        android:layout_marginTop="-35dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +47,7 @@
                 android:background="@drawable/rounded">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/lokacija1Slika"
                     android:layout_width="395dp"
                     android:layout_height="220dp"
                     android:layout_marginTop="-15dp"
@@ -97,6 +111,7 @@
                 android:id="@+id/lokacija2"
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded">
 
                 <ImageView
@@ -163,10 +178,114 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lokacija3"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:background="@drawable/rounded">
+
+                <ImageView
+                    android:id="@+id/lokacija3Slika"
+                    android:layout_width="395dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="-15dp"
+                    android:layout_marginBottom="32dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/lokacija_1"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.34"
+                    app:srcCompat="@drawable/plaza" />
+
+                <ImageView
+                    android:id="@+id/ikona_profila3"
+                    android:layout_width="45dp"
+                    android:layout_height="43dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="240dp"
+                    android:contentDescription="@string/ikona_profila"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.113"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lokacija3Slika"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/profile_icon" />
+
+                <TextView
+                    android:id="@+id/ime03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/ime3"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.063"
+                    app:layout_constraintStart_toEndOf="@+id/ikona_profila3"
+                    app:layout_constraintTop_toBottomOf="@+id/lokacija3Slika"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/lokacija_gumb3"
+                    android:layout_width="72dp"
+                    android:layout_height="90dp"
+                    android:contentDescription="@string/ikona_ugibanja"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.831"
+                    app:layout_constraintStart_toEndOf="@+id/ime03"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.947"
+                    app:srcCompat="@drawable/location" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lokacija_gumb3"
+                app:srcCompat="@drawable/rob2" />
+
 
         </LinearLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/rob"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:max="10"
+        android:progress="0"
+        android:progressDrawable="@drawable/rob"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.881"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rob"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/rob2" />
 
     <ImageView
         android:id="@+id/kamera"
@@ -174,9 +293,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="-30dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.97"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Scroll"
-        app:srcCompat="@drawable/camera" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/kamera"
+        android:adjustViewBounds="true"
+        android:maxWidth="90dp"
+        android:scaleType="fitCenter"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

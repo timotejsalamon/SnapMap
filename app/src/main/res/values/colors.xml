@@ -8,6 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bgMain">#D6ECFF</color>
-    <color name="progBg">#61A5A3</color>
-    <color name="progFg">#30D5C1</color>
+    <color name="progBg">#61A585</color>
+    <color name="progFg">#30D567</color>
 </resources>
