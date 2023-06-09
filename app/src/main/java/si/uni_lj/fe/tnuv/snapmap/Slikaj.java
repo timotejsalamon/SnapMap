@@ -60,6 +60,12 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        } else {
+            initializeCamera();
+        }
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
@@ -121,6 +127,15 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
                 Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+
+        //ZA KAMERO
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initializeCamera();
+            } else {
+                // Ce uporabnik ne dovoli kamere
+            }
+        }
     }
 
     private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
@@ -155,12 +170,15 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        initializeCamera();
+        /*
         try {
             camera.setPreviewDisplay(holder);
             camera.startPreview();
         } catch (IOException e) {
             e.printStackTrace();
         }
+         */
     }
 
     @Override
@@ -208,6 +226,18 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
     }
 
     private void initializeCamera() {
+        if (!isCameraInitialized) {
+            try {
+                camera = Camera.open();
+                camera.setPreviewDisplay(surfaceHolder);
+                camera.startPreview();
+                isCameraInitialized = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        /*
         if (camera == null) {
             try {
                 camera = Camera.open();
@@ -216,6 +246,8 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
                 e.printStackTrace();
             }
         }
+
+         */
     }
 
     private void releaseCamera() {
