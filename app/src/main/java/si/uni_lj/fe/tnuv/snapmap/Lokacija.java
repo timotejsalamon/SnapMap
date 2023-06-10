@@ -138,7 +138,7 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
         Marker marker = googleMap.addMarker(markerOptions);
         marker.showInfoWindow();
 
-        // Move the camera to the clicked location
+        // Premakne kamero na kliknjeno lokacijo
         if (lokacijaKamere != null) {
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(lokacijaKamere));
         } else {

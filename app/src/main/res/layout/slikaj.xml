@@ -44,11 +44,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
+                <ImageView
                     android:id="@+id/btnCapture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Capture"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="140dp"
+                    android:layout_marginRight="140dp"
+                    app:srcCompat="@drawable/kamera"
+                    android:contentDescription="Slikaj"
                     android:onClick="capturePicture" />
 
             </LinearLayout>

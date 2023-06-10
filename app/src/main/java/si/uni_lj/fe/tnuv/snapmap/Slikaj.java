@@ -2,6 +2,7 @@ package si.uni_lj.fe.tnuv.snapmap;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -21,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -65,7 +67,13 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
         surfaceHolder.addCallback(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                // Display rationale dialog explaining why the camera permission is needed
+                showPermissionRationaleDialog();
+            } else {
+                // No explanation needed, request the permission
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+            }
         } else {
             initializeCamera();
         }
@@ -90,13 +98,13 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Permission not granted, request it
+            // Ce nima dovoljenja, vprasa za lokacijo
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION},
                     1);
         } else {
-            // Permission already granted, get the current location
+            // Ce ima ze dovoljenje, pridobi trenutno lokacijo
             getCurrentLocation();
         }
     }
@@ -124,11 +132,11 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, get the current location
+                // Ce ima ze dovoljenje, pridobi trenutno lokacijo
                 getCurrentLocation();
             } else {
-                // Permission denied
-                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+                // Nima dovoljenja do lokacije
+                Toast.makeText(this, "Dostop do lokacije zavrnjen", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -137,7 +145,7 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initializeCamera();
             } else {
-                // Ce uporabnik ne dovoli kamere
+                Toast.makeText(this, "Dostop do kamere zavrnjen. Slikanje ni mogoče", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -166,7 +174,7 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
             e.printStackTrace();
         }
 
-        // Add the image to the system's Media Store (optional)
+        // Doda sliko v medie sistema
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri contentUri = Uri.fromFile(imageFile);
         mediaScanIntent.setData(contentUri);
@@ -209,7 +217,7 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        // Release the camera resources
+        // Sprosti kamero
         if (camera != null) {
             camera.stopPreview();
             camera.release();
@@ -236,7 +244,6 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
                 camera.setPreviewDisplay(surfaceHolder);
 
 
-                // Set the camera orientation
                 setCameraDisplayOrientation();
 
 
@@ -298,5 +305,26 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
             result = (info.orientation - degrees + 360) % 360;
         }
         camera.setDisplayOrientation(result);
+    }
+
+    private void showPermissionRationaleDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Potreben dostop do kamere");
+        builder.setMessage("Aplikacija za slikanje potrebuje odobren dostop do kamere");
+        builder.setPositiveButton("Dovoli", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                ActivityCompat.requestPermissions(Slikaj.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+            }
+        });
+        builder.setNegativeButton("Zavrni", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Toast.makeText(Slikaj.this, "Dostop do kamere zavrnjen. Slikanje ni mogoče", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.show();
     }
 }

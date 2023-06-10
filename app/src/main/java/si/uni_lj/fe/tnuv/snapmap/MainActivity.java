@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Retrieve the list of image files
+        // Pridobi niz slik
         List<File> imageFiles = getSavedImageFiles();
 
-        // Display the first image in an ImageView (you can customize this as needed)
+        // Prikaz slik
         if (!imageFiles.isEmpty()) {
             File firstImageFile = imageFiles.get(0);
             ImageView imageView = findViewById(R.id.lokacija1Slika);
