@@ -48,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         // Pridobi niz slik
         List<File> imageFiles = getSavedImageFiles();
