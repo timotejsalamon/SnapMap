@@ -9,11 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +37,7 @@ public class PotrdiSliko extends AppCompatActivity {
 
         double slikaLat = getIntent().getDoubleExtra("slikaLat", 0);
         double slikaLon = getIntent().getDoubleExtra("slikaLon", 0);
+        LatLng coordPic = new LatLng(slikaLat, slikaLon);
         convertCoordinatesToLocation(slikaLat, slikaLon);
 
         ponovi = findViewById(R.id.ponoviBtn);
@@ -50,6 +54,7 @@ public class PotrdiSliko extends AppCompatActivity {
         potrdi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CoordinateManager.saveCoord(PotrdiSliko.this, coordPic);
                 Intent intent = new Intent(PotrdiSliko.this, MainActivity.class);
                 startActivity(intent);
             }

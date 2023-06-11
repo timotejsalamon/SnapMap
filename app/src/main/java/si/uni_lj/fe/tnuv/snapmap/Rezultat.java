@@ -4,6 +4,7 @@ package si.uni_lj.fe.tnuv.snapmap;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -27,10 +28,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
 
     private double pravilnoLat;
-    private double praviloLon;
+    private double pravilnoLon;
     private double izbranoLat;
     private double izbranoLon;
 
@@ -49,13 +53,18 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
         mapa.onCreate(savedInstanceState);
         mapa.getMapAsync(this);
 
-        pravilnoLat = 46.045152;
-        praviloLon = 14.489788;
+
+        //Iskanje koordinat
+        dodeliLokacije();
 
         izbranoLat = getIntent().getDoubleExtra("lat", 0);
         izbranoLon = getIntent().getDoubleExtra("lon", 0);
 
-        double razdalja = distance(pravilnoLat, praviloLon, izbranoLat, izbranoLon);
+        List<LatLng> pravilno = CoordinateManager.getCoord(this);
+        pravilnoLat = pravilno.get(0).latitude;
+        pravilnoLon = pravilno.get(0).longitude;
+
+        double razdalja = distance(pravilnoLat, pravilnoLon, izbranoLat, izbranoLon);
         int tocke = tockeIzracun(razdalja);
 
         TextView besedilo = findViewById(R.id.score);
@@ -63,6 +72,12 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
 
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(tocke);
+    }
+
+    private void dodeliLokacije() {
+        LatLng slika1 = new LatLng(46.045152, 14.489788);
+        LatLng slika2 = new LatLng(46.049046, 14.486340);
+        LatLng slika3 = new LatLng(46.369919, 15.086530);
     }
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -101,7 +116,7 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap map) {
         googleMap = map;
 
-        LatLng pravilnoKoord = new LatLng(pravilnoLat, praviloLon);
+        LatLng pravilnoKoord = new LatLng(pravilnoLat, pravilnoLon);
         LatLng izbranoKoord = new LatLng(izbranoLat, izbranoLon);
 
         Marker pravilno = googleMap.addMarker(new MarkerOptions().position(pravilnoKoord));
