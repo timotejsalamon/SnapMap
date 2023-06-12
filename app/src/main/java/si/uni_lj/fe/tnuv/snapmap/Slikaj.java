@@ -162,7 +162,7 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
     };
 
     private void saveImageLocally(Bitmap imageBitmap) {
-        Log.d("MOGOCE", "klice se");
+        Toast.makeText(Slikaj.this, "NALAGANJE...", Toast.LENGTH_SHORT).show();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "IMG_" + timeStamp + ".jpg";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);

@@ -2,6 +2,8 @@ package si.uni_lj.fe.tnuv.snapmap;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -10,14 +12,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
 import android.graphics.BitmapFactory;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -100,6 +107,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void mojeSlike() {
+        LinearLayout linearLayout = findViewById(R.id.glavna);
+
+        List<File> imageFiles = getSavedImageFiles();
+        for (File slika : imageFiles) {
+            ConstraintLayout constraintLayout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.okno_slike, null);
+            ImageView imageView = constraintLayout.findViewById(R.id.lokacija1Slika);
+            Bitmap bitmap = BitmapFactory.decodeFile(slika.getAbsolutePath());
+            imageView.setImageBitmap(bitmap);
+            linearLayout.addView(constraintLayout);
+        }
+        ImageView konec = new ImageView(MainActivity.this);
+        float scale = getResources().getDisplayMetrics().density;
+        int height = (int) (75 * scale + 0.5f);
+        konec.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)); // Set the layout parameters
+
+        konec.setImageResource(R.drawable.rob2);
+
+        linearLayout.addView(konec);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -116,11 +144,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        // Pridobi niz slik
+        //Pridobi niz slik
         List<File> imageFiles = getSavedImageFiles();
         int dolzina = imageFiles.size();
+        if (dolzina != 0) {
+            mojeSlike();
+        }
 
-        // Prikaz slik
+        /* Prikaz slik
         if (!imageFiles.isEmpty()) {
             File firstImageFile = imageFiles.get(0);
             ImageView imageView = findViewById(R.id.lokacija1Slika);
@@ -132,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             }
             Bitmap bitmap = BitmapFactory.decodeFile(firstImageFile.getAbsolutePath());
             imageView.setImageBitmap(bitmap);
-        }
+        }*/
     }
 
     private List<File> getSavedImageFiles() {
