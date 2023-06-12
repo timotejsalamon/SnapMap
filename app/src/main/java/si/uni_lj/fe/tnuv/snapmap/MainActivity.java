@@ -18,7 +18,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView ugibaj;
+    private ImageView ugibaj1;
+    private ImageView ugibaj2;
+    private ImageView ugibaj3;
+
     private ImageView slikaj;
 
     @Override
@@ -29,13 +32,34 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
-        ugibaj = findViewById(R.id.lokacija_gumb);
+        ugibaj1 = findViewById(R.id.lokacija_gumb1);
+        ugibaj2 = findViewById(R.id.lokacija_gumb2);
+        ugibaj3 = findViewById(R.id.lokacija_gumb3);
         slikaj = findViewById(R.id.kamera);
 
-        ugibaj.setOnClickListener(new View.OnClickListener() {
+        ugibaj1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Lokacija.class);
+                intent.putExtra("ix", 0);
+                startActivity(intent);
+            }
+        });
+
+        ugibaj2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Lokacija.class);
+                intent.putExtra("ix", 1);
+                startActivity(intent);
+            }
+        });
+
+        ugibaj3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Lokacija.class);
+                intent.putExtra("ix", 2);
                 startActivity(intent);
             }
         });

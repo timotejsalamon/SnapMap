@@ -54,15 +54,16 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
         mapa.getMapAsync(this);
 
 
-        //Iskanje koordinat
+        //Prave koordinte
         dodeliLokacije();
+        int ix = getIntent().getIntExtra("ix", 0);
+        Toast.makeText(this, "IX=" + ix, Toast.LENGTH_SHORT).show();
+        List<LatLng> pravilno = CoordinateManager.getCoord(this);
+        pravilnoLat = pravilno.get(ix).latitude;
+        pravilnoLon = pravilno.get(ix).longitude;
 
         izbranoLat = getIntent().getDoubleExtra("lat", 0);
         izbranoLon = getIntent().getDoubleExtra("lon", 0);
-
-        List<LatLng> pravilno = CoordinateManager.getCoord(this);
-        pravilnoLat = pravilno.get(0).latitude;
-        pravilnoLon = pravilno.get(0).longitude;
 
         double razdalja = distance(pravilnoLat, pravilnoLon, izbranoLat, izbranoLon);
         int tocke = tockeIzracun(razdalja);
@@ -76,8 +77,11 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
 
     private void dodeliLokacije() {
         LatLng slika1 = new LatLng(46.045152, 14.489788);
+        CoordinateManager.saveCoord(this, slika1);
         LatLng slika2 = new LatLng(46.049046, 14.486340);
+        CoordinateManager.saveCoord(this, slika2);
         LatLng slika3 = new LatLng(46.369919, 15.086530);
+        CoordinateManager.saveCoord(this, slika3);
     }
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {

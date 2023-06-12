@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -42,6 +43,8 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
     private CameraPosition lokacijaKamere;
     private LatLng coords;
 
+    private int ix;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,21 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.lokacija);
+
+        //prikaz prave slike
+        ImageView slika = findViewById(R.id.lokacijaSlika);
+        ix = getIntent().getIntExtra("ix", 0);
+        switch (ix) {
+            case 1:
+                slika.setImageResource(R.drawable.rozna);
+                break;
+            case 2:
+                slika.setImageResource(R.drawable.plaza);
+                break;
+            default:
+                slika.setImageResource(R.drawable.fe);
+        }
+        Toast.makeText(this, "IX=" + ix, Toast.LENGTH_SHORT).show();
 
         Button gumb = findViewById(R.id.potrdi_lokacijo);
         gumb.setOnClickListener(this);
@@ -78,6 +96,16 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
             Intent intent = new Intent(this, Rezultat.class);
             intent.putExtra("lat", coords.latitude);
             intent.putExtra("lon", coords.longitude);
+            switch (ix) {
+                case 1:
+                    intent.putExtra("ix", 1);
+                    break;
+                case 2:
+                    intent.putExtra("ix", 2);
+                    break;
+                default:
+                    intent.putExtra("ix", 0);
+            }
             startActivity(intent);
         } else {
             Toast.makeText(this, "Lokacija ni izbrana!", Toast.LENGTH_SHORT).show();
