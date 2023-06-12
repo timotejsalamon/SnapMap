@@ -80,13 +80,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Pridobi niz slik
         List<File> imageFiles = getSavedImageFiles();
+        int dolzina = imageFiles.size();
 
         // Prikaz slik
         if (!imageFiles.isEmpty()) {
             File firstImageFile = imageFiles.get(0);
             ImageView imageView = findViewById(R.id.lokacija1Slika);
-            File secondImageFile = imageFiles.get(1);
-            if(secondImageFile != null){
+            if(dolzina >= 1){
+                File secondImageFile = imageFiles.get(1);
                 ImageView imageView2 = findViewById(R.id.lokacija2Slika);
                 Bitmap bitmap2 = BitmapFactory.decodeFile(secondImageFile.getAbsolutePath());
                 imageView2.setImageBitmap(bitmap2);

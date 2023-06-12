@@ -53,6 +53,7 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
 
     private boolean isCameraInitialized = false;
     //private boolean isSurfaceCreated = false;
+    public static String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +126,7 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
         Intent intent = new Intent(this, PotrdiSliko.class);
         intent.putExtra("slikaLat", currentLocation.getLatitude());
         intent.putExtra("slikaLon", currentLocation.getLongitude());
+        intent.putExtra("slika" , imagePath);
         startActivity(intent);
     }
     @Override
@@ -173,6 +175,8 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        imagePath = imageFile.getAbsolutePath();
 
         // Doda sliko v medie sistema
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);

@@ -1,6 +1,7 @@
 package si.uni_lj.fe.tnuv.snapmap;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -59,6 +61,11 @@ public class PotrdiSliko extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //postavim pravo sliko na stran
+        String imagePath = getIntent().getStringExtra("slika");
+        ImageView imageView = findViewById(R.id.slikaPreview);
+        imageView.setImageURI(Uri.parse(imagePath));
     }
 
     private void convertCoordinatesToLocation(double latitude, double longitude) {
