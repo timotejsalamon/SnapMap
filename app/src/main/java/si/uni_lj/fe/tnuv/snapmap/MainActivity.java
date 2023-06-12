@@ -1,8 +1,14 @@
 package si.uni_lj.fe.tnuv.snapmap;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,11 +18,20 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import android.graphics.BitmapFactory;
+import android.widget.Toast;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 123;
 
     private ImageView ugibaj1;
     private ImageView ugibaj2;
@@ -31,6 +46,17 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+
+        // Request location permission
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        } else {
+            // Permission is already granted, proceed with your logic
+        }
 
         ugibaj1 = findViewById(R.id.lokacija_gumb1);
         ugibaj2 = findViewById(R.id.lokacija_gumb2);
@@ -75,6 +101,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Location permission granted, proceed with your logic
+            } else {
+                // Location permission denied, handle accordingly (e.g., show a message)
+            }
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -86,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         if (!imageFiles.isEmpty()) {
             File firstImageFile = imageFiles.get(0);
             ImageView imageView = findViewById(R.id.lokacija1Slika);
-            if(dolzina >= 1){
+            if (dolzina == 2) {
                 File secondImageFile = imageFiles.get(1);
                 ImageView imageView2 = findViewById(R.id.lokacija2Slika);
                 Bitmap bitmap2 = BitmapFactory.decodeFile(secondImageFile.getAbsolutePath());
