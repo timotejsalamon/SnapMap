@@ -179,9 +179,9 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
         imagePath = imageFile.getAbsolutePath();
 
         // Doda sliko v medie sistema
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri contentUri = Uri.fromFile(imageFile);
-        mediaScanIntent.setData(contentUri);
+        //Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        //Uri contentUri = Uri.fromFile(imageFile);
+        //mediaScanIntent.setData(contentUri);
     }
 
     @Override

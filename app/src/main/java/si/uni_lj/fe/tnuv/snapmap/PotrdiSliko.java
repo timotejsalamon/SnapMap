@@ -64,8 +64,10 @@ public class PotrdiSliko extends AppCompatActivity {
 
         //postavim pravo sliko na stran
         String imagePath = getIntent().getStringExtra("slika");
-        ImageView imageView = findViewById(R.id.slikaPreview);
-        imageView.setImageURI(Uri.parse(imagePath));
+        if(imagePath != null){
+            ImageView imageView = findViewById(R.id.slikaPreview);
+            imageView.setImageURI(Uri.parse(imagePath));
+        }
     }
 
     private void convertCoordinatesToLocation(double latitude, double longitude) {
