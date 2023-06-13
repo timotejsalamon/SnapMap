@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -69,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
         ugibaj2 = findViewById(R.id.lokacija_gumb2);
         ugibaj3 = findViewById(R.id.lokacija_gumb3);
         slikaj = findViewById(R.id.kamera);
-
-        dodeliLokacije();
 
         ugibaj1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +161,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        if (CoordinateManager.getCoord(this).isEmpty()) {
+            dodeliLokacije();
+        }
 
         //Pridobi niz slik
         List<File> imageFiles = getSavedImageFiles();

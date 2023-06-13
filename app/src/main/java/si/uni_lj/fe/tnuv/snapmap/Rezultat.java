@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -87,6 +88,7 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback, V
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;

@@ -64,8 +64,23 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
         ImageView slika = findViewById(R.id.lokacijaSlika);
         ix = getIntent().getIntExtra("ix", 0);
         List<File> imageFiles = getSavedImageFiles();
-        Bitmap bitmap = BitmapFactory.decodeFile(imageFiles.get(ix-3).getAbsolutePath());
-        slika.setImageBitmap(bitmap);
+        if(ix < 3) {
+            switch (ix){
+                case(0):
+                    slika.setImageResource(R.drawable.fe);
+                    break;
+                case(1):
+                    slika.setImageResource(R.drawable.rozna);
+                    break;
+                default:
+                    slika.setImageResource(R.drawable.plaza);
+                    break;
+            }
+        }
+        else {
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFiles.get(ix-3).getAbsolutePath());
+            slika.setImageBitmap(bitmap);
+        }
 
         Button gumb = findViewById(R.id.potrdi_lokacijo);
         gumb.setOnClickListener(this);
