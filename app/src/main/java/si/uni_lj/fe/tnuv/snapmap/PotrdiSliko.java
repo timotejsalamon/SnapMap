@@ -62,16 +62,16 @@ public class PotrdiSliko extends AppCompatActivity {
             public void onClick(View v) {
                 CoordinateManager.saveCoord(PotrdiSliko.this, coordPic);
                 Intent intent = new Intent(PotrdiSliko.this, MainActivity.class);
-
-                //postavim pravo sliko na stran
-                String imagePath = getIntent().getStringExtra("slika");
-                if(imagePath != null){
-                    ImageView imageView = findViewById(R.id.slikaPreview);
-                    imageView.setImageURI(Uri.parse(imagePath));
-                }
                 startActivity(intent);
             }
         });
+
+        //postavim pravo sliko na stran
+        String imagePath = getIntent().getStringExtra("slika");
+        if(imagePath != null){
+            ImageView imageView = findViewById(R.id.slikaPreview);
+            imageView.setImageURI(Uri.parse(imagePath));
+        }
     }
 
     private void convertCoordinatesToLocation(double latitude, double longitude) {
