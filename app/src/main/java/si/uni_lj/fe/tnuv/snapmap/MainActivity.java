@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ugibaj1;
     private ImageView ugibaj2;
     private ImageView ugibaj3;
-
     private ImageView slikaj;
+    private int stSlik = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         ugibaj2 = findViewById(R.id.lokacija_gumb2);
         ugibaj3 = findViewById(R.id.lokacija_gumb3);
         slikaj = findViewById(R.id.kamera);
+
+        dodeliLokacije();
 
         ugibaj1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,25 +108,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    private void dodeliLokacije() {
+        LatLng slika1 = new LatLng(46.045152, 14.489788);
+        CoordinateManager.saveCoord(this, slika1);
+        LatLng slika2 = new LatLng(46.049046, 14.486340);
+        CoordinateManager.saveCoord(this, slika2);
+        LatLng slika3 = new LatLng(46.369919, 15.086530);
+        CoordinateManager.saveCoord(this, slika3);
+    }
 
     public void mojeSlike() {
         LinearLayout linearLayout = findViewById(R.id.glavna);
 
         List<File> imageFiles = getSavedImageFiles();
-        for (File slika : imageFiles) {
+        for (int i=0; i < imageFiles.size(); i++) {
+            final int ix = i+3;
             ConstraintLayout constraintLayout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.okno_slike, null);
             ImageView imageView = constraintLayout.findViewById(R.id.lokacija1Slika);
-            Bitmap bitmap = BitmapFactory.decodeFile(slika.getAbsolutePath());
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFiles.get(i).getAbsolutePath());
             imageView.setImageBitmap(bitmap);
+            ImageView btn = constraintLayout.findViewById(R.id.lokacija_gumb);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, Lokacija.class);
+                    intent.putExtra("ix", ix);
+                    startActivity(intent);
+                }
+            });
             linearLayout.addView(constraintLayout);
+            i++;
         }
         ImageView konec = new ImageView(MainActivity.this);
         float scale = getResources().getDisplayMetrics().density;
         int height = (int) (75 * scale + 0.5f);
         konec.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)); // Set the layout parameters
-
         konec.setImageResource(R.drawable.rob2);
-
         linearLayout.addView(konec);
     }
 
@@ -147,8 +166,9 @@ public class MainActivity extends AppCompatActivity {
         //Pridobi niz slik
         List<File> imageFiles = getSavedImageFiles();
         int dolzina = imageFiles.size();
-        if (dolzina != 0) {
+        if (dolzina != 0 && dolzina != stSlik) {
             mojeSlike();
+            stSlik = dolzina;
         }
 
         /* Prikaz slik

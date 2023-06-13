@@ -1,6 +1,8 @@
 package si.uni_lj.fe.tnuv.snapmap;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Environment;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,6 +34,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnCameraIdleListener, View.OnClickListener {
@@ -56,17 +63,9 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
         //prikaz prave slike
         ImageView slika = findViewById(R.id.lokacijaSlika);
         ix = getIntent().getIntExtra("ix", 0);
-        switch (ix) {
-            case 1:
-                slika.setImageResource(R.drawable.rozna);
-                break;
-            case 2:
-                slika.setImageResource(R.drawable.plaza);
-                break;
-            default:
-                slika.setImageResource(R.drawable.fe);
-        }
-        Toast.makeText(this, "IX=" + ix, Toast.LENGTH_SHORT).show();
+        List<File> imageFiles = getSavedImageFiles();
+        Bitmap bitmap = BitmapFactory.decodeFile(imageFiles.get(ix-3).getAbsolutePath());
+        slika.setImageBitmap(bitmap);
 
         Button gumb = findViewById(R.id.potrdi_lokacijo);
         gumb.setOnClickListener(this);
@@ -96,16 +95,7 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
             Intent intent = new Intent(this, Rezultat.class);
             intent.putExtra("lat", coords.latitude);
             intent.putExtra("lon", coords.longitude);
-            switch (ix) {
-                case 1:
-                    intent.putExtra("ix", 1);
-                    break;
-                case 2:
-                    intent.putExtra("ix", 2);
-                    break;
-                default:
-                    intent.putExtra("ix", 0);
-            }
+            intent.putExtra("ix", ix);
             startActivity(intent);
         } else {
             Toast.makeText(this, "Lokacija ni izbrana!", Toast.LENGTH_SHORT).show();
@@ -210,6 +200,24 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    private List<File> getSavedImageFiles() {
+        List<File> imageFiles = new ArrayList<>();
+
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (storageDir != null && storageDir.isDirectory()) {
+            File[] files = storageDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile() && file.getName().endsWith(".jpg")) {
+                        imageFiles.add(file);
+                    }
+                }
+            }
+        }
+
+        return imageFiles;
     }
 
 }

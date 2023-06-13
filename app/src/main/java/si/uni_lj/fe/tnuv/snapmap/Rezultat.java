@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,7 +32,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
+public class Rezultat extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private double pravilnoLat;
     private double pravilnoLon;
@@ -55,9 +56,7 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
 
 
         //Prave koordinte
-        dodeliLokacije();
         int ix = getIntent().getIntExtra("ix", 0);
-        Toast.makeText(this, "IX=" + ix, Toast.LENGTH_SHORT).show();
         List<LatLng> pravilno = CoordinateManager.getCoord(this);
         pravilnoLat = pravilno.get(ix).latitude;
         pravilnoLon = pravilno.get(ix).longitude;
@@ -68,20 +67,25 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback {
         double razdalja = distance(pravilnoLat, pravilnoLon, izbranoLat, izbranoLon);
         int tocke = tockeIzracun(razdalja);
 
+        String enota = "km";
         TextView besedilo = findViewById(R.id.score);
-        besedilo.setText("Razdalja: " + Math.round(razdalja) + "km" + "\nŠtevilo točk: " + tocke);
+        if (razdalja < 1) {
+            razdalja *= 1000;
+            enota = "m";
+        }
+        besedilo.setText("Razdalja: " + Math.round(razdalja) + enota + "\nŠtevilo točk: " + tocke);
 
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(tocke);
+
+        Button btn = findViewById(R.id.Zapri);
+        btn.setOnClickListener(this);
     }
 
-    private void dodeliLokacije() {
-        LatLng slika1 = new LatLng(46.045152, 14.489788);
-        CoordinateManager.saveCoord(this, slika1);
-        LatLng slika2 = new LatLng(46.049046, 14.486340);
-        CoordinateManager.saveCoord(this, slika2);
-        LatLng slika3 = new LatLng(46.369919, 15.086530);
-        CoordinateManager.saveCoord(this, slika3);
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private double distance(double lat1, double lon1, double lat2, double lon2) {
