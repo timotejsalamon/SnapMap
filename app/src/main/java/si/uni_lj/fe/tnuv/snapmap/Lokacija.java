@@ -25,8 +25,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -51,6 +53,10 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
     private LatLng coords;
 
     private int ix;
+
+    ImageView slikaLokacije;
+    boolean isImageFitToScreen;
+    ImageView ikona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +108,34 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
                 }
             }
         };
+
+        slikaLokacije = findViewById(R.id.lokacijaSlika);
+        ConstraintLayout okvir = findViewById(R.id.lokacija1);
+        ikona = findViewById(R.id.zoom);
+
+        slikaLokacije.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    int height = dpToPx(150);
+                    isImageFitToScreen=false;
+                    okvir.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+                    slikaLokacije.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    slikaLokacije.setAdjustViewBounds(true);
+                    slikaLokacije.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    ikona.setImageResource(R.drawable.zoom_out);
+                }else{
+                    isImageFitToScreen=true;
+                    okvir.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    slikaLokacije.setScaleType(ImageView.ScaleType.FIT_XY);
+                    ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+                    layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+                    slikaLokacije.setLayoutParams(layoutParams);
+                    ikona.setImageResource(R.drawable.zoom_in);
+                }
+            }
+        });
     }
 
     @Override
@@ -233,6 +267,11 @@ public class Lokacija extends AppCompatActivity implements OnMapReadyCallback, G
         }
 
         return imageFiles;
+    }
+
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
     }
 
 }

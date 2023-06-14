@@ -19,7 +19,8 @@
         app:srcCompat="@drawable/snapmaplogo"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_marginTop="-10dp"/>
+        android:layout_marginTop="-10dp"
+        android:contentDescription="@string/app_name" />
 
         <LinearLayout
             android:id="@+id/rezultatLinear"
@@ -31,22 +32,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5">
+            app:layout_constraintVertical_bias="0.62">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/mapaRezultataOzadje"
-                android:layout_width="370dp"
+                android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_marginBottom="10dp"
+                android:padding="10dp"
                 android:background="@drawable/rounded">
 
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/mapaRez"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="15dp"
                     android:adjustViewBounds="true"
-                    android:contentDescription="Rezultat"
+                    android:contentDescription="@string/mapa"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +62,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tocke_teks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rezultat"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black" />
+
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -69,11 +79,6 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:max="5000"
                     android:progress="2500"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:paddingTop="5dp"
                     android:layout_marginBottom="10dp"
                     android:progressBackgroundTint="@color/progBg"
                     android:progressTint="@color/progFg"
@@ -84,26 +89,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="Napaka"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:text="@string/napaka"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="Napaka"
+                    android:textSize="16sp"
+                    android:text="@string/napaka"
                     android:textColor="@color/black"
-                    android:paddingTop="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:paddingTop="15dp" />
 
             </LinearLayout>
 
@@ -113,13 +110,12 @@
         android:id="@+id/Zapri"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-15dp"
         android:text="@string/zapri"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rezultatLinear"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.99" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

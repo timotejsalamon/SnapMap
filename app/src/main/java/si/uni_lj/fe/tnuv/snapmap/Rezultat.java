@@ -85,7 +85,6 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback, V
         float scale = getResources().getDisplayMetrics().density;
         int sirina = (int) (250 * scale + 0.5f);
         int hor = (sirina * tocke) / 5000;
-        Toast.makeText(this, "hor:" + sirina, Toast.LENGTH_SHORT).show();
         tockeBar.setX(hor);
         tockeBar.setText("" + tocke);
 

@@ -5,13 +5,21 @@
     <string name="lokacija_2">Lokacija 2</string>
     <string name="ime1">Janez Novak</string>
     <string name="ikona_profila">Ikona profila</string>
-    <string name="ime01_tekst">Nik Napeti</string>
+    <string name="ime01_tekst">Nik Kovač</string>
     <string name="ikona_ugibanja">Ikona ugibanja lokacije</string>
-    <string name="ime02_tekst">Nika Da</string>
+    <string name="ime02_tekst">Nika Kuhar</string>
     <string name="gumbZaSlikat">gumb za slikat</string>
     <string name="potrdi">Potrdi</string>
     <string name="ponovi">Ponovi</string>
     <string name="mapa">Mapa</string>
     <string name="zapri">Zapri</string>
     <string name="ime3">Matic Vidmar</string>
+    <string name="jaz">Jaz</string>
+    <string name="potrditev_lokacije">Potrdite vašo lokacijo:</string>
+    <string name="slika">Slika</string>
+    <string name="Napaka">Vaša lokacija: Napaka</string>
+    <string name="rob">rob</string>
+    <string name="gumb_slikaj">gumb slikaj</string>
+    <string name="rezultat">Rezultat</string>
+    <string name="napaka">Napaka</string>
 </resources>
