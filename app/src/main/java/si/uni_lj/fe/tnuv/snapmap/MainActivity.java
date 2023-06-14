@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             linearLayout.addView(constraintLayout);
-            i++;
+            //i++;
         }
         ImageView konec = new ImageView(MainActivity.this);
         float scale = getResources().getDisplayMetrics().density;
