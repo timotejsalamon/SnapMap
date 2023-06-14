@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,10 +76,19 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback, V
             razdalja *= 1000;
             enota = "m";
         }
-        besedilo.setText("Razdalja: " + Math.round(razdalja) + enota + "\nŠtevilo točk: " + tocke);
+        besedilo.setText("Razdalja: " + Math.round(razdalja) + enota);
 
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(tocke);
+
+        TextView tockeBar = findViewById(R.id.tocke);
+        float scale = getResources().getDisplayMetrics().density;
+        int sirina = (int) (250 * scale + 0.5f);
+        int hor = (sirina * tocke) / 5000;
+        Toast.makeText(this, "hor:" + sirina, Toast.LENGTH_SHORT).show();
+        tockeBar.setX(hor);
+        tockeBar.setText("" + tocke);
+
 
         Button btn = findViewById(R.id.Zapri);
         btn.setOnClickListener(this);

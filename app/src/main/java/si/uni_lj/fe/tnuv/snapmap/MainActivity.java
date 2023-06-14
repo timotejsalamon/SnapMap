@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void mojeSlike() {
         LinearLayout linearLayout = findViewById(R.id.glavna);
+        float scale = getResources().getDisplayMetrics().density;
 
         List<File> imageFiles = getSavedImageFiles();
         for (int i=0; i < imageFiles.size(); i++) {
@@ -136,12 +138,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             linearLayout.addView(constraintLayout);
-            //i++;
+            ImageView konec = new ImageView(MainActivity.this);
+            int height = (int) (10 * scale + 0.5f);
+            konec.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+            konec.setImageResource(R.drawable.rob2);
+            linearLayout.addView(konec);
         }
         ImageView konec = new ImageView(MainActivity.this);
-        float scale = getResources().getDisplayMetrics().density;
         int height = (int) (75 * scale + 0.5f);
-        konec.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)); // Set the layout parameters
+        konec.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         konec.setImageResource(R.drawable.rob2);
         linearLayout.addView(konec);
     }
@@ -173,20 +178,6 @@ public class MainActivity extends AppCompatActivity {
             mojeSlike();
             stSlik = dolzina;
         }
-
-        /* Prikaz slik
-        if (!imageFiles.isEmpty()) {
-            File firstImageFile = imageFiles.get(0);
-            ImageView imageView = findViewById(R.id.lokacija1Slika);
-            if (dolzina == 2) {
-                File secondImageFile = imageFiles.get(1);
-                ImageView imageView2 = findViewById(R.id.lokacija2Slika);
-                Bitmap bitmap2 = BitmapFactory.decodeFile(secondImageFile.getAbsolutePath());
-                imageView2.setImageBitmap(bitmap2);
-            }
-            Bitmap bitmap = BitmapFactory.decodeFile(firstImageFile.getAbsolutePath());
-            imageView.setImageBitmap(bitmap);
-        }*/
     }
 
     private List<File> getSavedImageFiles() {

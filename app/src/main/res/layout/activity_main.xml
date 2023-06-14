@@ -118,7 +118,7 @@
                 <ImageView
                     android:id="@+id/lokacija2Slika"
                     android:layout_width="395dp"
-                    android:layout_height="200dp"
+                    android:layout_height="220dp"
                     android:layout_marginTop="-15dp"
                     android:layout_marginBottom="32dp"
                     android:adjustViewBounds="true"
@@ -183,12 +183,13 @@
                 android:id="@+id/lokacija3"
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded">
 
                 <ImageView
                     android:id="@+id/lokacija3Slika"
                     android:layout_width="395dp"
-                    android:layout_height="200dp"
+                    android:layout_height="220dp"
                     android:layout_marginTop="-15dp"
                     android:layout_marginBottom="32dp"
                     android:adjustViewBounds="true"

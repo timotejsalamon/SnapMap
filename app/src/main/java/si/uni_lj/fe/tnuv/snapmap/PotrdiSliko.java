@@ -66,7 +66,6 @@ public class PotrdiSliko extends AppCompatActivity {
             }
         });
 
-        //postavim pravo sliko na stran
         String imagePath = getIntent().getStringExtra("slika");
         if(imagePath != null){
             ImageView imageView = findViewById(R.id.slikaPreview);

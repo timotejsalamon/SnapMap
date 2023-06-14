@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
@@ -168,9 +169,13 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File imageFile = new File(storageDir, imageFileName);
 
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(imageBitmap, 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);
+
         try {
             FileOutputStream outputStream = new FileOutputStream(imageFile);
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
         } catch (IOException e) {
@@ -179,10 +184,6 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
 
         imagePath = imageFile.getAbsolutePath();
 
-        // Doda sliko v medie sistema
-        //Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        //Uri contentUri = Uri.fromFile(imageFile);
-        //mediaScanIntent.setData(contentUri);
     }
 
     @Override
