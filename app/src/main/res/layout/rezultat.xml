@@ -66,6 +66,7 @@
                     android:id="@+id/tocke_teks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:text="@string/rezultat"
                     android:textSize="16sp"
                     android:layout_marginTop="10dp"
@@ -91,7 +92,8 @@
                     android:textStyle="bold"
                     android:text="@string/napaka"
                     android:textSize="16sp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:layout_marginTop="-20dp" />
 
                 <TextView
                     android:id="@+id/score"
@@ -100,7 +102,7 @@
                     android:textSize="16sp"
                     android:text="@string/napaka"
                     android:textColor="@color/black"
-                    android:paddingTop="15dp" />
+                    android:paddingTop="5dp" />
 
             </LinearLayout>
 
@@ -111,11 +113,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zapri"
+        android:backgroundTint="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99" />
+        app:layout_constraintVertical_bias="0.98" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

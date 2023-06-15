@@ -63,6 +63,7 @@
                     android:id="@+id/ponoviBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/purple_700"
                     android:text="@string/ponovi" />
 
                 <Space
@@ -74,6 +75,7 @@
                     android:id="@+id/potrdiBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/purple_700"
                     android:text="@string/potrdi" />
 
             </LinearLayout>

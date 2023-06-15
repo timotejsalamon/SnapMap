@@ -52,6 +52,7 @@ public class PotrdiSliko extends AppCompatActivity {
         ponovi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CoordinateManager.saveCoord(PotrdiSliko.this, coordPic);
                 Intent intent = new Intent(PotrdiSliko.this, Slikaj.class);
                 startActivity(intent);
             }

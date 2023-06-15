@@ -54,7 +54,6 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
     private LocationManager locationManager;
 
     private boolean isCameraInitialized = false;
-    //private boolean isSurfaceCreated = false;
     public static String imagePath;
 
     @Override
@@ -71,10 +70,8 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                // Display rationale dialog explaining why the camera permission is needed
                 showPermissionRationaleDialog();
             } else {
-                // No explanation needed, request the permission
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
             }
         } else {
@@ -91,15 +88,13 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
             if (camera != null) {
                 // Ustvari nalaganje
                 ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("Nalaganje...");
+                progressDialog.setMessage("Shranjevanje...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
 
                 camera.takePicture(null, null, pictureCallback);
                 lokacija();
 
-                // Odstrani nalagnje
-                //progressDialog.dismiss();
             }
         }
     }
@@ -173,7 +168,6 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
     };
 
     private void saveImageLocally(Bitmap imageBitmap) {
-        //Toast.makeText(Slikaj.this, "NALAGANJE...", Toast.LENGTH_SHORT).show();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "IMG_" + timeStamp + ".jpg";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -199,16 +193,6 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         initializeCamera();
-        /*
-        try {
-            camera.setPreviewDisplay(holder);
-            camera.startPreview();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         */
-
-        //setCameraDisplayOrientation();
     }
 
     @Override
@@ -269,18 +253,6 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
                 e.printStackTrace();
             }
         }
-
-        /*
-        if (camera == null) {
-            try {
-                camera = Camera.open();
-                isCameraInitialized = true;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-         */
     }
 
     private void releaseCamera() {

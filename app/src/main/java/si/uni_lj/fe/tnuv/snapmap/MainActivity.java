@@ -1,6 +1,7 @@
 package si.uni_lj.fe.tnuv.snapmap;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -8,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,8 +17,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,15 +60,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
-        // Request location permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted, request it
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_LOCATION);
-        } else {
-            // Permission is already granted, proceed with your logic
         }
 
         ugibaj1 = findViewById(R.id.lokacija_gumb1);
@@ -75,39 +75,107 @@ public class MainActivity extends AppCompatActivity {
         ugibaj1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Lokacija.class);
-                intent.putExtra("ix", 0);
-                startActivity(intent);
+                preveriLokacijo(0);
             }
         });
 
         ugibaj2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Lokacija.class);
-                intent.putExtra("ix", 1);
-                startActivity(intent);
+                preveriLokacijo(1);
             }
         });
 
         ugibaj3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Lokacija.class);
-                intent.putExtra("ix", 2);
-                startActivity(intent);
+                preveriLokacijo(2);
             }
         });
 
         slikaj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Slikaj.class);
-                startActivity(intent);
+                preveriLokacijoSlikaj();
             }
         });
 
     }
+
+    private void preveriLokacijoSlikaj(){
+        try {
+            if (lokacijaVkopljena()){
+                Intent intent = new Intent(MainActivity.this, Slikaj.class);
+                startActivity(intent);
+            }
+            else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Potreben dostop do lokacije");
+                builder.setMessage("Aplikacija za delovanje potrebuje dostop do lokacije");
+                builder.setPositiveButton("Vklopi lokacijo", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("Zavrni", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Toast.makeText(MainActivity.this, "Dostop do lokacije zavrnjen. Uporaba ni mogoča", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void preveriLokacijo(int ix){
+        try {
+            if (lokacijaVkopljena()){
+                Intent intent = new Intent(MainActivity.this, Lokacija.class);
+                intent.putExtra("ix", ix);
+                startActivity(intent);
+            }
+            else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Potreben dostop do lokacije");
+                builder.setMessage("Aplikacija za delovanje potrebuje dostop do lokacije");
+                builder.setPositiveButton("Vklopi lokacijo", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("Zavrni", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Toast.makeText(MainActivity.this, "Dostop do lokacije zavrnjen. Uporaba ni mogoča", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private boolean lokacijaVkopljena() throws InterruptedException {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean isLocationEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (isLocationEnabled) {
+            return true;
+        }
+        return false;
+    }
+
     private void dodeliLokacije() {
         LatLng slika1 = new LatLng(46.045152, 14.489788);
         CoordinateManager.saveCoord(this, slika1);
@@ -132,9 +200,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, Lokacija.class);
-                    intent.putExtra("ix", ix);
-                    startActivity(intent);
+                   preveriLokacijo(ix);
                 }
             });
             linearLayout.addView(constraintLayout);
@@ -149,18 +215,6 @@ public class MainActivity extends AppCompatActivity {
         konec.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         konec.setImageResource(R.drawable.rob2);
         linearLayout.addView(konec);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Location permission granted, proceed with your logic
-            } else {
-                // Location permission denied, handle accordingly (e.g., show a message)
-            }
-        }
     }
 
     @Override
