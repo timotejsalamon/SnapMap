@@ -1,6 +1,7 @@
 package si.uni_lj.fe.tnuv.snapmap;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -88,8 +89,17 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
         } else {
             if (camera != null) {
+                // Ustvari nalaganje
+                ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("Nalaganje...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 camera.takePicture(null, null, pictureCallback);
                 lokacija();
+
+                // Odstrani nalagnje
+                //progressDialog.dismiss();
             }
         }
     }
@@ -158,12 +168,12 @@ public class Slikaj extends AppCompatActivity implements SurfaceHolder.Callback,
         public void onPictureTaken(byte[] data, Camera camera) {
             Bitmap imageBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
             saveImageLocally(imageBitmap);
-            camera.startPreview();
+            //camera.startPreview();
         }
     };
 
     private void saveImageLocally(Bitmap imageBitmap) {
-        Toast.makeText(Slikaj.this, "NALAGANJE...", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Slikaj.this, "NALAGANJE...", Toast.LENGTH_SHORT).show();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "IMG_" + timeStamp + ".jpg";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
