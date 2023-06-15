@@ -141,7 +141,7 @@ public class Rezultat extends AppCompatActivity implements OnMapReadyCallback, V
 
         Marker pravilno = googleMap.addMarker(new MarkerOptions().position(pravilnoKoord));
         Marker izbrano = googleMap.addMarker(new MarkerOptions().position(izbranoKoord));
-        pravilno.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        izbrano.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
         PolylineOptions polylineOptions = new PolylineOptions()
                 .add(pravilnoKoord, izbranoKoord)
